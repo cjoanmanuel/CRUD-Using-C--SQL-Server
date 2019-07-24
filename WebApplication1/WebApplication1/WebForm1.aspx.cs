@@ -21,8 +21,15 @@ namespace WebApplication1
         }
         protected void BindGridview()
         {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "servername.database.windows.net";
+            builder.UserID = "username";
+            builder.Password = "****";
+            builder.InitialCatalog = "book_details";
             DataSet ds = new DataSet();
-            using (SqlConnection con = new SqlConnection("Data Source=ZYTEN-PC\\SQLEXPRESS;Integrated Security=true;Initial Catalog=book_details"))
+//using (SqlConnection con = new SqlConnection("Data Source=ZYTEN-PC\\SQLEXPRESS;Integrated Security=true;Initial Catalog=book_details"))
+
+            using (SqlConnection con = new SqlConnection(builder.ConnectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("crudoperations", con);
@@ -84,7 +91,8 @@ namespace WebApplication1
             int book_id = Convert.ToInt32(gvDetails.DataKeys[e.RowIndex].Values["book_id"].ToString());
             TextBox txtbookname = (TextBox)gvDetails.Rows[e.RowIndex].FindControl("txtBookName");
             TextBox txtbookauthor = (TextBox)gvDetails.Rows[e.RowIndex].FindControl("txtBookAuthor");
-            TextBox txtbISBN = (TextBox)gvDetails.FooterRow.FindControl("txtbISBN");
+            TextBox txtbISBN = (TextBox)gvDetails.Rows[e.RowIndex].FindControl("txtBookISBN");
+ //TextBox txtbISBN = (TextBox)gvDetails.FooterRow.FindControl("txtbISBN");
             crudoperations("UPDATE", txtbookname.Text, txtbookauthor.Text, txtbISBN.Text, book_id);
         }
 
@@ -97,7 +105,16 @@ namespace WebApplication1
 
         protected void crudoperations(string status, string book_name, string book_author, string book_ISBN, int book_id)
         {
-            using (SqlConnection con = new SqlConnection("Data Source=ZYTEN-PC\\SQLEXPRESS;Integrated Security=true;Initial Catalog=book_details"))
+
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "servername.database.windows.net";
+            builder.UserID = "username";
+            builder.Password = "****";
+            builder.InitialCatalog = "book_details";
+            DataSet ds = new DataSet();
+//using (SqlConnection con = new SqlConnection("Data Source=ZYTEN-PC\\SQLEXPRESS;Integrated Security=true;Initial Catalog=book_details"))
+
+            using (SqlConnection con = new SqlConnection(builder.ConnectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("crudoperations", con);
